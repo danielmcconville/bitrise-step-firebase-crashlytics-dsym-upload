@@ -1,6 +1,10 @@
 # Firebase Crashlytics dSYM Upload
 
-This step is for apps that are using Google Firebase and Google Crashlytics by Fabric.\nThis step should be run after the xcode-archive step. It uses a script from your installed Fabric pod to upload the dSYM files generated from the xcode-archive step to Google Firebase (this is normally done automatically during the build phase but fails when your build settings have Enable Bitcode set to true).\nYou will need to have configured Google Firebase for your project and have a GoogleService.-Info.plist file in your project, as well as having the Fabric pod installed for this step to work. Please see https://firebase.google.com/docs/ios/setup and https://firebase.google.com/docs/crashlytics/get-started
+This step is for apps that are using Google Firebase and Google Crashlytics by Fabric.
+
+This step should be run after the xcode-archive step. It uses a script from your installed Fabric pod to upload the dSYM files generated from the xcode-archive step to Google Firebase (this is normally done automatically during the build phase but fails when your build settings have Enable Bitcode set to true).
+
+You will need to have configured Google Firebase for your project and have a GoogleService.-Info.plist file in your project, as well as having the Fabric pod installed for this step to work. Please see https://firebase.google.com/docs/ios/setup and https://firebase.google.com/docs/crashlytics/get-started
 
 
 ## How to use this Step
