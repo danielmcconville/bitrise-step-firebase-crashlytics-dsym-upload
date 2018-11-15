@@ -29,8 +29,8 @@ host_os_tags:
 # You can find more information about project type tags in the Step Development Guideline:
 # https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
 #
-# project_type_tags:
-#   - ios
+project_type_tags:
+  - ios
 #   - macos
 #   - android
 #   - xamarin
@@ -64,24 +64,41 @@ toolkit:
 
 
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - google_service_plist_file_name: GoogleService-Info.plist
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
+      title: "GoogleService-Info.plist file name"
+      summary: File name for the GooleService .plist file
       description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
+        If you have not changed the name of the GoogleService plist file you can leave this as default. Otherwise set it to the new filename.
       is_expand: true
       is_required: true
       value_options: []
-
-outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - fabric_upload_symbols_script_file: ${BITRISE_SOURCE_DIR}/Pods/Fabric/upload-symbols
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
+      title: "Fabric upload-symbols script path"
+      summary: Path to the Fabric upload-symbols script
       description: |
-        Description of this output.
+        This will default to the normal location of this script within the Fabric pods directory.
 
-        Can be Markdown formatted text.
+        If you have manually installed Fabric please set the script location here.
+      is_expand: true
+      is_required: true
+      value_options: []
+  - bitrise_dsym_dir_path: ${BITRISE_DSYM_DIR_PATH}
+    opts:
+      title: "dSYM directory path"
+      summary: dSYM directory path
+      description: |
+
+      is_expand: true
+      is_required: true
+      value_options: []
+  - bitrise_app_dir_path: ${BITRISE_APP_DIR_PATH}
+    opts:
+      title: "Bitrise app directory path"
+      summary: Path to the bitrise app
+      description: |
+
+      is_expand: true
+      is_required: true
+      value_options: []

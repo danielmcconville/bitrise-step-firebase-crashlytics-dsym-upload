@@ -1,22 +1,24 @@
 #!/bin/bash
 set -ex
 
-echo "This is the value specified for the input 'example_step_input': ${example_step_input}"
+if [ -z ${bitrise_dsym_dir_path+x} ] 
+then
+  echo "BITRISE_DSYM_DIR_PATH environment variable is not set, make sure you run this step after the xcode-archive step."
+  exit 1
+fi
 
-#
-# --- Export Environment Variables for other Steps:
-# You can export Environment Variables for other Steps with
-#  envman, which is automatically installed by `bitrise setup`.
-# A very simple example:
-envman add --key EXAMPLE_STEP_OUTPUT --value 'the value you want to share'
-# Envman can handle piped inputs, which is useful if the text you want to
-# share is complex and you don't want to deal with proper bash escaping:
-#  cat file_with_complex_input | envman add --KEY EXAMPLE_STEP_OUTPUT
-# You can find more usage examples on envman's GitHub page
-#  at: https://github.com/bitrise-io/envman
+if [ ! -e ${bitrise_app_dir_path}/${google_service_plist_file_name} ] 
+then
+  echo "Could not find ${google_service_plist_file_name} in the build, make sure it is being copied during your build phase."
+  exit 1
+fi
 
-#
-# --- Exit codes:
-# The exit code of your Step is very important. If you return
-#  with a 0 exit code `bitrise` will register your Step as "successful".
-# Any non zero exit code will be registered as "failed" by `bitrise`.
+if [ ! -e ${fabric_upload_symbols_script_file} ] 
+then
+  echo "Could not find the fabric script file at ${fabric_upload_symbols_script_file}, please ensure the path is correct."
+  exit 1
+fi
+
+
+echo "Searching for dSYM files in ${bitrise_dsym_dir_path} and uploading to ${bitrise_app_dir_path}/${google_service_plist_file_name} using script ${fabric_upload_symbols_script_file}"
+find ${bitrise_dsym_dir_path} -name "*.dSYM" | xargs -I \{\} ${fabric_upload_symbols_script_file} -gsp ${bitrise_app_dir_path}/${google_service_plist_file_name} -p ios \{\}
